@@ -5,7 +5,9 @@ import java.util.List;
 
 public class Participant {
     private String name;
-    private List<Result> results = new ArrayList<>();
+    private List<Event> events = new ArrayList<>();
+    private Integer totalScore;
+    private String ranking;
 
     public String getName() {
         return name;
@@ -15,11 +17,27 @@ public class Participant {
         this.name = name;
     }
 
-    public List<Result> getResults() {
-        return results;
+    public List<Event> getEvents() {
+        return events;
     }
 
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public Integer getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(Integer totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    public String getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(String ranking) {
+        this.ranking = ranking;
     }
 }
