@@ -1,20 +1,11 @@
 package com.kanstantin.decathlon.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Participant {
     private String name;
-    private Set<Result> results = new HashSet<Result>();
-
-    public Participant() {
-
-    }
-
-    public Participant(String name, Set<Result> results) {
-        this.name = name;
-        this.results = results;
-    }
+    private List<Result> results = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -24,11 +15,11 @@ public class Participant {
         this.name = name;
     }
 
-    public Set<Result> getResults() {
+    public List<Result> getResults() {
         return results;
     }
 
-    public void setResults(Set<Result> results) {
+    public void setResults(List<Result> results) {
         this.results = results;
     }
 }

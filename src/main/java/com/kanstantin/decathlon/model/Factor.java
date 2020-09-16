@@ -1,16 +1,16 @@
 package com.kanstantin.decathlon.model;
 
-public class Event {
+public class Factor {
     private String name;
     private double figA;
     private double figB;
     private double figC;
 
-    public Event() {
+    public Factor() {
 
     }
 
-    public Event(String name, double figA, double figB, double figC) {
+    public Factor(String name, double figA, double figB, double figC) {
         this.name = name;
         this.figA = figA;
         this.figB = figB;
