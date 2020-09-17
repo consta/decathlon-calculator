@@ -1,9 +1,13 @@
 package com.kanstantin.decathlon.model;
 
+import com.kanstantin.decathlon.XmlSerializable;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Participant {
+public class Participant implements XmlSerializable {
     private String name;
     private List<Event> events = new ArrayList<>();
     private Integer totalScore;
@@ -39,5 +43,19 @@ public class Participant {
 
     public void setRanking(String ranking) {
         this.ranking = ranking;
+    }
+
+    @Override
+    public Element serialize(Document document) {
+        Element element = document.createElement("participant");
+        element.setAttribute("name", getName());
+        element.setAttribute("place", getRanking());
+        element.setAttribute("totalScore", String.format("%d", getTotalScore()));
+
+        for (Event event: getEvents()) {
+            Element eventElement = event.serialize(document);
+            element.appendChild(eventElement);
+        }
+        return element;
     }
 }

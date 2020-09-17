@@ -31,6 +31,20 @@ public class Utils {
         return source.trim().length() > 0;
     }
 
+    /**
+     * Removes leading and trailing spaces from a string
+     * @param source string to be trimmed
+     * @return trimmed string or null in case source string was null
+     */
+    public static String trim(String source) {
+        return source != null ? source.trim() : null;
+    }
+
+    /**
+     * Attempts to parse double value out from a string
+     * @param source string containing figure
+     * @return parsed value as an Optional set, or empty optional in case source string contains not eligible value
+     */
     public static Optional<Double> parseNumeric(String source) {
         if (stringIsNotBlank(source)) {
             try {
@@ -46,30 +60,26 @@ public class Utils {
      * Reads the content of CSV from a given resource, where columns are delimited by specified delimiter
      * Lines which start with "#" are treated as comments and is not loaded
      *
-     * @param resourceName absolute or relative filename of CSV file
+     * @param filename absolute or relative filename of CSV file
      * @param _delimiter   string value representing delimiter for this CSV file
      * @return List of splitted lines
      */
-    public static List<String[]> readCSV(String resourceName, String _delimiter) {
-        if (!Utils.stringIsNotBlank(resourceName)) {
+    public static List<String[]> readCSV(String filename, String _delimiter) {
+        if (!Utils.stringIsNotBlank(filename)) {
             throw new IllegalStateException("Filename must not be blank");
         }
 
         final String delimiter = Utils.stringIsNotBlank(_delimiter) ? _delimiter : ";";
 
-        final String absoluteFilename = Optional.ofNullable(RunMe.class.getClassLoader().getResource(resourceName))
-                .orElseThrow(() -> new RuntimeException("Failed to obtain URL for " + resourceName))
-                .getFile();
-
-        try (Stream<String> stream = Files.lines(Paths.get(absoluteFilename))) {
+        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             List<String[]> result = stream
                     .filter(isLineParseable)
                     .map(line -> line.split(delimiter))
                     .collect(Collectors.toList());
-            log.fine("got " + result.size() + " lines from " + resourceName);
+            log.fine("got " + result.size() + " lines from " + filename);
             return result;
         } catch (IOException ex) {
-            throw new RuntimeException("Failed to process file " + resourceName, ex);
+            throw new RuntimeException("Failed to process file " + filename, ex);
         }
     }
 
@@ -94,6 +104,40 @@ public class Utils {
                 .filter(isLineParseable)
                 .map(line -> line.split(delimiter))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Produces "place" or "ranking" string for the given position and amount of equally ranked participants
+     *
+     * For instance, two athletes share places "2" and "3" - in this case, input arguments to the method are (2, 2)
+     * and the result is "2-3"
+     *
+     * Another example: three athletes showed the same result and are going to share places 4, 5, 6
+     * Then, the input is (4, 3) and the result is "4-5-6"
+     *
+     * @param position of the starting rank
+     * @param equalCount amount of athletes with equal results
+     * @return "ranking" string like "1", or "1-2" etc
+     */
+    public static String ranking(int position, int equalCount) {
+        if (position < 1 || equalCount < 1) {
+            return "?";
+        }
+
+        if (equalCount == 1) {
+            return String.format("%d", position);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = position; i < position + equalCount; i++) {
+            if (i == position) {
+                sb.append(i);
+            }
+            else {
+                sb.append("-").append(i);
+            }
+        }
+        return sb.toString();
     }
 
     private static Predicate<String> isLineParseable =

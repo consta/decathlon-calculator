@@ -1,6 +1,10 @@
 package com.kanstantin.decathlon.model;
 
-public class Event {
+import com.kanstantin.decathlon.XmlSerializable;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+public class Event implements XmlSerializable {
     private String name;
     private double performance;
     private int score;
@@ -27,5 +31,14 @@ public class Event {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    @Override
+    public Element serialize(Document document) {
+        Element element = document.createElement("event");
+        element.setAttribute("name", getName());
+        element.setAttribute("performance", String.format("%.2f", getPerformance()));
+        element.setAttribute("score", String.format("%d", score));
+        return element;
     }
 }

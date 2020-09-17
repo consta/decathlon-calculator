@@ -7,7 +7,6 @@ public class Factor {
     private double figC;
 
     public Factor() {
-
     }
 
     public Factor(String name, double figA, double figB, double figC) {

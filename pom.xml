@@ -7,9 +7,13 @@
     <groupId>com.kanstantin</groupId>
     <artifactId>decathlon</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -22,6 +26,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
                 <configuration>
                     <argLine>-Djava.util.logging.config.file=log.properties</argLine>
                 </configuration>
@@ -29,9 +34,25 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>false</addClasspath>
+                            <mainClass>
+                                com.kanstantin.decathlon.RunMe
+                            </mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>

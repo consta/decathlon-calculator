@@ -36,12 +36,6 @@ public class UtilsTest {
     }
 
     @Test
-    public void testReadCSVEventsAsFile() {
-        List<String[]> events = Utils.readCSV("factors.csv", ",");
-        assertEquals(10, events.size());
-    }
-
-    @Test
     public void testReadCSVEventsAsInputStream() {
         InputStream is = this.getClass().getResourceAsStream("/factors.csv");
         List<String[]> events = Utils.readCSV(is, ",");
@@ -51,25 +45,31 @@ public class UtilsTest {
     @Test
     public void testReadCSVResultsAsFile() {
         List<String[]> results = Utils.readCSV("results.csv", ";");
-        assertEquals(4, results.size());
+        assertEquals(5, results.size());
     }
 
-    @Test
-    public void testReadCSVResultsAsInputStream() {
-        InputStream is = this.getClass().getResourceAsStream("/results.csv");
-        List<String[]> results = Utils.readCSV(is, ";");
-        assertEquals(4, results.size());
-    }
 
     @Test(expected = IllegalStateException.class)
     public void testReadCSVWrongFilename() {
         List<String[]> results = Utils.readCSV(" ", ";");
-        assertEquals(4, results.size());
+        assertEquals(5, results.size());
     }
 
     @Test(expected = RuntimeException.class)
     public void testReadCSVMissingFile() {
         List<String[]> results = Utils.readCSV("abc", ";");
-        assertEquals(4, results.size());
+        assertEquals(5, results.size());
+    }
+
+    @Test
+    public void testRanking() {
+        assertEquals("1", Utils.ranking(1, 1));
+        assertEquals("1-2", Utils.ranking(1, 2));
+        assertEquals("3-4", Utils.ranking(3, 2));
+        assertEquals("3-4-5", Utils.ranking(3, 3));
+        assertEquals("3-4-5-6", Utils.ranking(3, 4));
+        assertEquals("?", Utils.ranking(0, 4));
+        assertEquals("?", Utils.ranking(1, 0));
+        assertEquals("?", Utils.ranking(0, 0));
     }
 }
