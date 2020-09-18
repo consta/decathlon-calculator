@@ -42,13 +42,6 @@ public class UtilsTest {
         assertEquals(10, events.size());
     }
 
-    @Test
-    public void testReadCSVResultsAsFile() {
-        List<String[]> results = Utils.readCSV("results.csv", ";");
-        assertEquals(5, results.size());
-    }
-
-
     @Test(expected = IllegalStateException.class)
     public void testReadCSVWrongFilename() {
         List<String[]> results = Utils.readCSV(" ", ";");

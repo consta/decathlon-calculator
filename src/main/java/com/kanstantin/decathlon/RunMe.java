@@ -1,5 +1,7 @@
 package com.kanstantin.decathlon;
 
+import javax.xml.crypto.Data;
+
 public class RunMe {
     public static final String DEFAULT_INPUT_CSV = "results.csv";
 
@@ -14,8 +16,8 @@ public class RunMe {
             inputFile = DEFAULT_INPUT_CSV;
         }
 
-        //
-        Application app = new Application();
+        DataSource dataSource = new CsvDataSource(inputFile);
+        Application app = new Application(dataSource);
         app.run(inputFile, outputFile);
     }
 
