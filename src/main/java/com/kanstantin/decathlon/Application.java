@@ -17,7 +17,7 @@ public class Application {
         this.dataSource = dataSource;
     }
 
-    public void run(String inputFile, String outputFile) {
+    public void run(String outputFile) {
         List<Participant> participants = dataSource.loadData();
 
         Competition competition = new Competition();

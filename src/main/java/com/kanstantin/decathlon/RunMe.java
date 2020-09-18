@@ -18,7 +18,7 @@ public class RunMe {
 
         DataSource dataSource = new CsvDataSource(inputFile);
         Application app = new Application(dataSource);
-        app.run(inputFile, outputFile);
+        app.run(outputFile);
     }
 
     /**
